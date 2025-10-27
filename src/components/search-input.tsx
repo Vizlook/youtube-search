@@ -3,8 +3,7 @@
 import { ChangeEvent, FormEvent, useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/cn";
 import { QUERY_TIPS } from "@/lib/constants";
-
-export type SearchMode = "Search" | "Answer";
+import { type SearchMode } from "@/lib/types";
 
 interface SearchInputProps {
   onSearch?: (query: string, mode: SearchMode) => void;
@@ -113,12 +112,12 @@ export const SearchInput = ({
         </div>
       </div>
       {QUERY_TIPS.length > 0 ? (
-        <div className="mt-4 space-y-2">
+        <div className="mt-4 flex flex-wrap gap-2">
           {QUERY_TIPS.map((tip) => (
             <button
               type="button"
               key={tip}
-              className="block px-2 py-1 text-sm border border-border rounded-md hover:cursor-pointer hover:bg-muted"
+              className="block px-2 py-1 text-sm text-left border border-border rounded-md hover:cursor-pointer hover:bg-muted"
               onClick={() => selectQueryTip(tip)}
             >
               {tip}

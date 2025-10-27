@@ -1,24 +1,71 @@
 "use client";
 
 import Link from "next/link";
-import { SearchInput, type SearchMode } from "./search-input";
+import { SearchInput } from "./search-input";
+import { type SearchMode, type SearchVideoResponse } from "@/lib/types";
+import { useRef, useState } from "react";
+import { Loader } from "lucide-react";
+import { SearchResult } from "./search-result";
 
 export const YouTubeSearch = () => {
-  const handleSearch = (query: string, mode: SearchMode) => {
-    console.log("Searching for:", query, mode);
-    // 实际搜索逻辑
+  const [mode, setMode] = useState<SearchMode>("Search");
+  const [searchResponse, setSearchResponse] = useState<
+    SearchVideoResponse | undefined
+  >();
+  const [loading, setLoading] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const abortControllerRef = useRef<AbortController>(null);
+
+  const handleSearch = async (query: string, mode: SearchMode) => {
+    setMode(mode);
+    setLoading(true);
+    setSearchResponse(undefined);
+    setErrorText("");
+
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    // 为当前请求创建一个新的 AbortController
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
+    try {
+      const result = await fetch("/api/search-video", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query, mode }),
+        signal: abortControllerRef.current.signal,
+      });
+
+      if (result.ok) {
+        setSearchResponse(await result.json());
+      } else {
+        setErrorText("Failed to search video. Please try again.");
+      }
+    } catch (error) {
+      if ((error as any).name !== "AbortError") {
+        setErrorText("Failed to search video. Please try again.");
+      }
+    } finally {
+      if (abortControllerRef.current === controller) {
+        setLoading(false);
+      }
+    }
   };
 
   return (
     <main className="container min-h-screen flex flex-col">
-      <div className="flex-1 flex flex-col justify-center py-8">
-        <div className="w-full max-w-3xl mx-auto">
+      <div className="flex-1 flex flex-col justify-center py-12 max-w-4xl mx-auto">
+        <div className="w-full">
           <h1 className="text-center text-2xl sm:text-4xl mb-4 font-medium">
             YouTube Video Search
           </h1>
           <p className="text-base mb-4 text-center">
             Search what's said and shown in YouTube videos. Videos cover
-            healthcare, technology, education, finance, and e-commerce. Powered
+            healthcare, technology, education, e-commerce, and finance. Powered
             by{" "}
             <Link
               href="https://www.vizlook.com/"
@@ -32,6 +79,17 @@ export const YouTubeSearch = () => {
           <div>
             <SearchInput onSearch={handleSearch} />
           </div>
+        </div>
+        <div className="flex items-center justify-center mt-8">
+          {loading ? (
+            <Loader className="animate-spin" size={32} />
+          ) : searchResponse ? (
+            <SearchResult searchResponse={searchResponse} mode={mode} />
+          ) : errorText ? (
+            <div className="text-red-500 text-base font-medium text-center">
+              {errorText}
+            </div>
+          ) : null}
         </div>
       </div>
       <div className="w-full h-[3.5rem] footer-placehold"></div>

@@ -43,7 +43,13 @@ export const YouTubeSearch = () => {
       if (result.ok) {
         setSearchResponse(await result.json());
       } else {
-        setErrorText("Failed to search video. Please try again.");
+        if (result.status === 429) {
+          setErrorText(
+            "Your free quota for today has been used up. Please try it tomorrow."
+          );
+        } else {
+          setErrorText("Failed to search video. Please try again.");
+        }
       }
     } catch (error) {
       if ((error as any).name !== "AbortError") {

@@ -131,22 +131,14 @@ export const answer = async (
   citations: SearchResultItem[]
 ): Promise<string> => {
   const context = citations.map(
-    ({
-      url,
-      title,
-      author,
-      publishedDate,
-      highlights,
-      transcription,
-      summary,
-    }) => ({
+    ({ url, title, author, publishedDate, highlights, summary }) => ({
+      contentType: "video",
       videoUrl: url,
       title,
       author,
       publishedDate,
-      highlights,
-      transcription,
-      summary,
+      highlightVideoClips: highlights,
+      videoSummary: summary,
     })
   );
 

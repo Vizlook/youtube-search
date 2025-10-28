@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# YouTube Search
+
+### Powered by [Vizlook](https://www.vizlook.com) - The Video Search Engine for AI Applications
+
+![Screenshot](https://youtube-search.vizlook.com/youtube-search-screenshot.png)
+
+## What is YouTube Search?
+
+YouTube Search is a free and open-source tool that lets you search the content inside YouTube videos. Instead of scrubbing through timelines, you can find the exact moment you need by describing it. Search for spoken dialogue, on-screen text, or a combination of both. For example, you can find when a speaker says a specific quote, when a sign with 'Danger' appears, or find a lecture on 'Machine Learning' where the text 'Deep Learning' is visible on a slide.
+
+## Tech Stack
+
+- **Frontend & Server**: [Next.js](https://nextjs.org/docs) with App Router, [TailwindCSS](https://tailwindcss.com), TypeScript
+- **Video Search Engine**: [Vizlook](https://www.vizlook.com)
+- **AI Integration**: [Google Gemini AI](https://ai.google.dev/gemini-api/docs)
+- **Hosting**: [Vercel](https://vercel.com)
 
 ## Getting Started
 
-First, run the development server:
+### Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/vizlook/youtube-search.git
+cd youtube-search
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Prerequisites
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Node.js
+- [Vizlook API key](https://www.vizlook.com/dashboard/api-keys)
+- [Google Gemini API key](https://aistudio.google.com/api-keys)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Environment Setup
 
-## Learn More
+Create a `.env.local` file in the root directory with the following structure, or copy from `.env.example`:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+VIZLOOK_API_KEY=your_vizlook_api_key
+GEMINI_API_KEY=your_gemini_api_key
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation & Start
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Install dependencies
 
-## Deploy on Vercel
+```bash
+pnpm install
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Run the development server
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm dev
+```
+
+3. Open http://localhost:3000 in your browser
+
+## About [Vizlook](https://www.vizlook.com)
+
+Vizlook is a powerful video search engine that equips AI products with meaningful video context through a simple API. Vizlook enables applications to search the actual visual and spoken content within a vast library of videos.
+
+We handle the complex processes of video analysis and indexing, allowing your AI to instantly find relevant moments based on what is seen and said. With our specialized API suite, you can integrate sophisticated video search capabilities to provide your AI product with a deeper level of understanding.
+
+---
+
+Built by team [Vizlook](https://www.vizlook.com)

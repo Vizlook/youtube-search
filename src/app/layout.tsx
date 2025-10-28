@@ -12,10 +12,28 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const seoTitle = "YouTube Search | Vizlook";
+const seoDescription =
+  "Search inside YouTube videos by content. Find the exact moment a concept is explained, a product is shown, or a question is answered.";
+
 export const metadata: Metadata = {
-  title: "YouTube Search | Vizlook",
-  description:
-    "Search inside YouTube videos by content. Find the exact moment a concept is explained, a product is shown, or a question is answered.",
+  title: seoTitle,
+  description: seoDescription,
+  openGraph: {
+    title: seoTitle,
+    description: seoDescription,
+    images: [
+      "https://youtube-search.vizlook.com/youtube-search-screenshot.png",
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: seoTitle,
+    description: seoDescription,
+    images: [
+      "https://youtube-search.vizlook.com/youtube-search-screenshot.png",
+    ],
+  },
 };
 
 export default function RootLayout({

@@ -44,9 +44,7 @@ export const YouTubeSearch = () => {
         setSearchResponse(await result.json());
       } else {
         if (result.status === 429) {
-          setErrorText(
-            "Your free quota for today has been used up. Please try it tomorrow."
-          );
+          setErrorText("You have exceeded the rate limit. Retry later.");
         } else {
           setErrorText("Failed to search video. Please try again.");
         }

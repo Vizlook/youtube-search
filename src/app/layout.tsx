@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "YouTube Search",
+  title: "YouTube Search | Vizlook",
   description:
     "Search inside YouTube videos by content. Find the exact moment a concept is explained, a product is shown, or a question is answered.",
 };

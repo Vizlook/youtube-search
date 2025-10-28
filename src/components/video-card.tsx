@@ -73,7 +73,7 @@ export const VideoCard = ({ citation, onClick }: Props) => {
       className="w-full rounded-xl overflow-hidden shadow-lg bg-white text-left hover:cursor-pointer flex flex-col"
     >
       <div
-        // @ts-ignore
+        // @ts-expect-error
         style={{ "--image-url": `url(${thumbnail.url})` }}
         className="relative pt-[56.25%] bg-gray-200 text-white bg-[image:var(--image-url)] bg-cover bg-center"
       >

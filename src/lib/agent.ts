@@ -168,7 +168,8 @@ You will execute the following three steps in order:
 ## 4. OUTPUT & CITATION FORMAT
 - The final output must be only the answer text with inline citations. No introductory or concluding phrases.
 - A citation must be placed at the end of the sentence or group of consecutive sentences supported by the exact same source(s). Place citations after the final punctuation of a sentence.
-- Single citation format is \`([author.name](videoUrl))\`. Multiple citations format is \`([author1.name](videoUrl1), [author2.name](videoUrl2))\`.
+- Single citation format: \`([author.name](videoUrl))\`. 
+- Multiple citations format: \`([author1.name](videoUrl1), [author2.name](videoUrl2))\`.
 
 ---
 

@@ -50,7 +50,7 @@ export const SearchResult = ({
           ))}
         </div>
       ) : (
-        <div className="text-center">No results.</div>
+        mode === "Search" && <div className="text-center">No results.</div>
       )}
 
       {!!selectedCitation && (

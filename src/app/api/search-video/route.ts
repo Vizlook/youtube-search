@@ -44,12 +44,8 @@ export async function POST(request: NextRequest) {
       results: resultItems,
     };
 
-    if (body.mode === "Answer") {
-      if (resultItems.length === 0) {
-        response.answer = "No results.";
-      } else {
-        response.answer = await answer(body.query, resultItems);
-      }
+    if (body.mode === "Answer" && resultItems.length > 0) {
+      response.answer = await answer(body.query, resultItems);
     }
 
     return Response.json(response);

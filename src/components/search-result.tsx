@@ -50,7 +50,10 @@ export const SearchResult = ({
           ))}
         </div>
       ) : (
-        mode === "Search" && <div className="text-center">No results.</div>
+        <div className="text-center text-lg">
+          No matching results found. <br />
+          We are rapidly expanding YouTube video data.
+        </div>
       )}
 
       {!!selectedCitation && (

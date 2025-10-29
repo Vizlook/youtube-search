@@ -29,6 +29,7 @@ cd youtube-search
 - Node.js
 - [Vizlook API key](https://www.vizlook.com/dashboard/api-keys)
 - [Google Gemini API key](https://aistudio.google.com/api-keys)
+- optional [Google Tag Manager](https://support.google.com/tagmanager/answer/12811173) for analyze web
 
 ### Environment Setup
 
@@ -37,6 +38,9 @@ Create a `.env.local` file in the root directory with the following structure, o
 ```env
 VIZLOOK_API_KEY=your_vizlook_api_key
 GEMINI_API_KEY=your_gemini_api_key
+
+# optional
+GOOGLE_TAG_ID=your_google_tag_id
 ```
 
 ### Installation & Start

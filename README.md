@@ -1,12 +1,12 @@
-# YouTube Search
+# TubeSeek
 
 ### Powered by [Vizlook](https://www.vizlook.com) - The Video Search Engine for AI Applications
 
-![Screenshot](https://youtube-search.vizlook.com/youtube-search-screenshot.png)
+![Screenshot](https://tubeseek.vizlook.com/tubeseek-screenshot.png)
 
-## What is YouTube Search?
+## What is TubeSeek?
 
-YouTube Search is a free and open-source tool that lets you search the content inside YouTube videos. Instead of scrubbing through timelines, you can find the exact moment you need by describing it. Search for spoken dialogue, on-screen text, or a combination of both. For example, you can find when a speaker says a specific quote, when a sign with 'Danger' appears, or find a lecture on 'Machine Learning' where the text 'Deep Learning' is visible on a slide.
+TubeSeek is a free and open-source tool that lets you search the content inside YouTube videos. Instead of scrubbing through timelines, you can find the exact moment you need by describing it. Search for spoken dialogue, on-screen text, or a combination of both. For example, you can find when a speaker says a specific quote, when a sign with 'Danger' appears, or find a lecture on 'Machine Learning' where the text 'Deep Learning' is visible on a slide.
 
 ## Tech Stack
 
@@ -20,8 +20,8 @@ YouTube Search is a free and open-source tool that lets you search the content i
 ### Clone the repository
 
 ```bash
-git clone https://github.com/vizlook/youtube-search.git
-cd youtube-search
+git clone https://github.com/Vizlook/tubeseek.git
+cd tubeseek
 ```
 
 ### Prerequisites

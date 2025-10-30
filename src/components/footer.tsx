@@ -5,7 +5,7 @@ export const Footer = () => {
     <footer className="fixed bottom-0 left-0 right-0 bg-background border-t border-border">
       <div className="container py-4 flex items-center justify-center gap-4">
         <Link
-          href="https://github.com/Vizlook/youtube-search"
+          href="https://github.com/Vizlook/tubeseek"
           className="flex items-center gap-2 hover:underline"
           target="_blank"
           rel="noopener noreferrer"

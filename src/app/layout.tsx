@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const seoTitle = "YouTube Search | Vizlook";
+const seoTitle = "TubeSeek - YouTube Search Engine";
 const seoDescription =
   "Search inside YouTube videos by content. Find the exact moment a concept is explained, a product is shown, or a question is answered.";
 
@@ -23,17 +23,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: seoTitle,
     description: seoDescription,
-    images: [
-      "https://youtube-search.vizlook.com/youtube-search-screenshot.png",
-    ],
+    images: ["https://tubeseek.vizlook.com/tubeseek-screenshot.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: seoTitle,
     description: seoDescription,
-    images: [
-      "https://youtube-search.vizlook.com/youtube-search-screenshot.png",
-    ],
+    images: ["https://tubeseek.vizlook.com/tubeseek-screenshot.png"],
   },
 };
 

@@ -65,7 +65,7 @@ export const YouTubeSearch = () => {
       <div className="flex-1 flex flex-col justify-center py-12 max-w-4xl mx-auto">
         <div className="w-full">
           <h1 className="text-center text-2xl sm:text-4xl mb-4 font-medium">
-            YouTube Video Search
+            TubeSeek
           </h1>
           <p className="text-base mb-4 text-center">
             Search what's said and shown in YouTube videos. Videos cover

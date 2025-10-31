@@ -64,13 +64,11 @@ export const YouTubeSearch = () => {
     <main className="container min-h-screen flex flex-col">
       <div className="flex-1 flex flex-col justify-center py-12 max-w-4xl mx-auto">
         <div className="w-full">
-          <h1 className="text-center text-2xl sm:text-4xl mb-4 font-medium">
+          <h1 className="text-center text-2xl md:text-3xl mb-4 font-medium">
             TubeSeek
           </h1>
-          <p className="text-base mb-4 text-center">
-            Search what's said and shown in YouTube videos. Videos cover
-            healthcare, technology, education, e-commerce, and finance. Powered
-            by{" "}
+          <p className="text-sm md:text-base mb-6 text-center">
+            Search what's said and shown in YouTube videos. Powered by{" "}
             <Link
               href="https://www.vizlook.com/"
               target="_blank"

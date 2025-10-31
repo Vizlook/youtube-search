@@ -18,6 +18,7 @@ export const SearchInput = ({
 }: SearchInputProps) => {
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<SearchMode>("Search");
+  const [focused, setFocused] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -52,13 +53,22 @@ export const SearchInput = ({
 
   return (
     <form onSubmit={handleSubmit} className={cn("relative w-full", className)}>
-      <div className="relative flex flex-col w-full overflow-hidden rounded-lg border border-border focus-within:shadow-xs">
+      <div
+        className={cn(
+          "relative flex flex-col w-full overflow-hidden rounded-lg border border-border transition-shadow",
+          {
+            "shadow-[2px_2px_15px_rgba(0,0,0,0.1)]": focused,
+          }
+        )}
+      >
         <textarea
           ref={textareaRef}
           value={query}
           onChange={handleChange}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           placeholder={placeholder}
-          className="w-full px-4 py-3 outline-none resize-none min-h-[80px]"
+          className="w-full px-4 py-3 outline-none border-0 resize-none min-h-[80px]"
           rows={1}
         />
 

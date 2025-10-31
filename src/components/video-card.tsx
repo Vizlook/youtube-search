@@ -70,7 +70,7 @@ export const VideoCard = ({ citation, onClick }: Props) => {
     <button
       type="button"
       onClick={onClick}
-      className="w-full rounded-xl overflow-hidden shadow-lg bg-white text-left hover:cursor-pointer flex flex-col"
+      className="w-full rounded-xl overflow-hidden bg-white text-left cursor-pointer flex flex-col border border-border/60 hover:shadow-lg"
     >
       <div
         // @ts-expect-error: temp fix, will optimize it later
@@ -84,7 +84,7 @@ export const VideoCard = ({ citation, onClick }: Props) => {
           <div className="flex-grow">
             <div className="relative h-1 bg-gray-500/70 rounded-full">
               <div
-                className="absolute top-0 h-1 bg-primary rounded-full"
+                className="absolute top-0 h-1 bg-yellow-500 rounded-full"
                 style={{
                   width: `${highlightPercentage}%`,
                   left: `${highlightStartPercentage}%`,
@@ -96,9 +96,9 @@ export const VideoCard = ({ citation, onClick }: Props) => {
                 style={{ left: highlightTooltipPositionLeft }}
               >
                 <div className="absolute bottom-full mb-1.5 -translate-x-1/2 left-0">
-                  <div className="relative px-2 py-1 bg-primary text-white text-xs rounded">
+                  <div className="relative px-2 py-1 bg-yellow-500 text-white text-xs font-medium rounded">
                     {highlightDurationSeconds}s
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-4 border-x-transparent border-t-[4px] border-t-primary"></div>
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-4 border-x-transparent border-t-[4px] border-t-yellow-500"></div>
                   </div>
                 </div>
               </div>

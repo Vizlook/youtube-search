@@ -1,9 +1,8 @@
 import { type SearchResultItem } from "@vizlook/sdk";
-import YouTube, { type YouTubePlayer, type YouTubeProps } from "react-youtube";
 import { useEffect, useMemo, useRef, useState } from "react";
+import YouTube, { type YouTubePlayer } from "react-youtube";
+import { VideoTimeline } from "./video-timeline";
 import { VideoTranscription } from "./video-transcription";
-
-type Options = YouTubeProps["opts"];
 
 const extractYoutubeVideoIdFromUrl = (url: string): string | undefined => {
   // handle YouTube URL: https://www.youtube.com/watch?v=VIDEO_ID
@@ -29,8 +28,6 @@ const extractYoutubeVideoIdFromUrl = (url: string): string | undefined => {
   return undefined;
 };
 
-const videoRatio = 9 / 16;
-
 export const VideoPlayer = ({
   citation,
   onClose,
@@ -42,12 +39,33 @@ export const VideoPlayer = ({
     () => extractYoutubeVideoIdFromUrl(citation.url),
     [citation.url]
   );
-  const [playOptions, setPlayOptions] = useState<Options | null>(null);
+  const playerOptions = useMemo(
+    () => ({
+      height: 405,
+      width: 720,
+      playerVars: {
+        autoplay: 1 as 1,
+        start: citation.highlights[0]?.startTime || 0,
+      },
+    }),
+    [citation.highlights]
+  );
   const playerRef = useRef<YouTubePlayer | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [currentPlayTime, setCurrentPlayTime] = useState<number>(0);
 
   const onReady = (event: { target: YouTubePlayer }) => {
     playerRef.current = event.target;
+
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    intervalRef.current = setInterval(async () => {
+      const currentTime = (await playerRef.current?.getCurrentTime()) ?? 0;
+      setCurrentPlayTime(currentTime);
+    }, 1000);
   };
 
   const handleSeekTo = async (seekTime: number) => {
@@ -58,34 +76,14 @@ export const VideoPlayer = ({
   };
 
   useEffect(() => {
-    if (containerRef.current) {
-      const width = containerRef.current.getBoundingClientRect().width;
-
-      if (width < 640) {
-        setPlayOptions({
-          height: width * videoRatio,
-          width: width,
-          playerVars: {
-            autoplay: 1 as 1,
-            start: citation.highlights[0]?.startTime || 0,
-          },
-        });
-      } else {
-        setPlayOptions({
-          height: 640 * videoRatio,
-          width: 640,
-          playerVars: {
-            autoplay: 1 as 1,
-            start: citation.highlights[0]?.startTime || 0,
-          },
-        });
-      }
-    }
-
     document.body.classList.add("overflow-hidden");
 
     return () => {
       document.body.classList.remove("overflow-hidden");
+
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
   }, []);
 
@@ -101,20 +99,28 @@ export const VideoPlayer = ({
         >
           &times;
         </button>
-        <div
-          ref={containerRef}
-          className="w-full h-full flex flex-col xl:flex-row gap-4"
-        >
-          {!!playOptions && (
-            <YouTube
-              videoId={videoId}
-              opts={playOptions}
-              className="flex justify-center"
-              iframeClassName="rounded-lg overflow-hidden"
-              onReady={onReady}
+        <div className="w-full h-full overflow-hidden relative">
+          <div className="absolute left-0 top-0 w-full h-full overflow-auto flex flex-col lg:flex-row gap-4">
+            <div className="w-full max-w-[720px] mx-auto lg:flex-1 block lg:flex flex-col">
+              <YouTube
+                videoId={videoId}
+                opts={playerOptions}
+                className="relative overflow-hidden rounded-lg aspect-video bg-muted shrink-0"
+                iframeClassName="absolute top-0 left-0 w-full h-full"
+                onReady={onReady}
+              />
+              <VideoTimeline
+                summary={citation.summary}
+                currentPlayTime={currentPlayTime}
+                onClickTime={handleSeekTo}
+              />
+            </div>
+            <VideoTranscription
+              item={citation}
+              currentPlayTime={currentPlayTime}
+              onClickTime={handleSeekTo}
             />
-          )}
-          <VideoTranscription item={citation} onClickTime={handleSeekTo} />
+          </div>
         </div>
       </div>
     </div>

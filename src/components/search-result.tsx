@@ -6,11 +6,13 @@ import { useState } from "react";
 import { VideoPlayer } from "./video-player";
 
 export const SearchResult = ({
+  query,
   searchResponse,
   mode,
 }: {
-  searchResponse: SearchVideoResponse;
+  query: string;
   mode: SearchMode;
+  searchResponse: SearchVideoResponse;
 }) => {
   const { answer, results } = searchResponse;
   const [selectedCitation, setSelectedCitation] =
@@ -30,6 +32,9 @@ export const SearchResult = ({
 
   return (
     <div>
+      <h2 className="text-xl md:text-2xl text-center font-medium mb-4">
+        {query}
+      </h2>
       {mode === "Answer" && answer ? (
         <div className="mb-4">
           <AnswerRenderer

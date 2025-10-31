@@ -8,6 +8,7 @@ import { Loader } from "lucide-react";
 import { SearchResult } from "./search-result";
 
 export const YouTubeSearch = () => {
+  const [query, setQuery] = useState<string>("");
   const [mode, setMode] = useState<SearchMode>("Search");
   const [searchResponse, setSearchResponse] = useState<
     SearchVideoResponse | undefined
@@ -17,6 +18,7 @@ export const YouTubeSearch = () => {
   const abortControllerRef = useRef<AbortController>(null);
 
   const handleSearch = async (query: string, mode: SearchMode) => {
+    setQuery(query);
     setMode(mode);
     setLoading(true);
     setSearchResponse(undefined);
@@ -82,11 +84,15 @@ export const YouTubeSearch = () => {
             <SearchInput onSearch={handleSearch} />
           </div>
         </div>
-        <div className="flex items-center justify-center mt-8">
+        <div className="flex items-center justify-center mt-10">
           {loading ? (
             <Loader className="animate-spin" size={32} />
           ) : searchResponse ? (
-            <SearchResult searchResponse={searchResponse} mode={mode} />
+            <SearchResult
+              query={query}
+              mode={mode}
+              searchResponse={searchResponse}
+            />
           ) : errorText ? (
             <div className="text-red-500 text-base font-medium text-center">
               {errorText}

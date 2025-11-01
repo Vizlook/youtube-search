@@ -24,6 +24,7 @@ const eslintConfig = defineConfig([
       "@typescript-eslint/prefer-as-const": "off",
       "@typescript-eslint/no-explicit-any": "warn",
       "react/no-unescaped-entities": "warn",
+      "react/display-name": "off",
     },
   },
 ]);

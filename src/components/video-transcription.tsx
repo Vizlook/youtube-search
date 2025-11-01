@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState, useImperativeHandle, forwardRef } from "react";
 import {
   type AudioClip,
   type VideoClip,
@@ -20,7 +20,7 @@ const PlayIcon = () => (
   </svg>
 );
 
-type OnClickTimeFn = (startTime: number) => void;
+const highlightMarkClassName = "current-play-position";
 
 const VideoToTextTab = ({
   videoClips,
@@ -41,6 +41,7 @@ const VideoToTextTab = ({
           key={index}
           className={cn("bg-muted rounded-lg p-4", {
             "bg-gray-300/70": isHighlight,
+            [highlightMarkClassName]: isHighlight,
           })}
         >
           <div
@@ -80,6 +81,7 @@ const AudioTranscriptionTab = ({
           key={index}
           className={cn("bg-muted rounded-lg p-4", {
             "bg-gray-300/70": isHighlight,
+            [highlightMarkClassName]: isHighlight,
           })}
         >
           <div
@@ -132,6 +134,7 @@ const VideoSummaryTab = ({
               key={index}
               className={cn("bg-muted rounded-lg p-4", {
                 "bg-gray-300/70": isHighlight,
+                [highlightMarkClassName]: isHighlight,
               })}
             >
               <div
@@ -164,15 +167,20 @@ enum TabId {
   Summary,
 }
 
-export const VideoTranscription = ({
-  item,
-  currentPlayTime,
-  onClickTime,
-}: {
+type OnClickTimeFn = (startTime: number) => void;
+interface VideoTranscriptionProps {
   item: SearchResultItem;
   currentPlayTime: number;
   onClickTime: OnClickTimeFn;
-}) => {
+}
+
+export const VideoTranscription = forwardRef<
+  {
+    scrollHighlightIntoView: () => void;
+  },
+  VideoTranscriptionProps
+>((props, ref) => {
+  const { item, currentPlayTime, onClickTime } = props;
   const [activeTab, setActiveTab] = useState<TabId>(TabId.AudioTranscription);
   const tabs: {
     id: TabId;
@@ -196,8 +204,25 @@ export const VideoTranscription = ({
     },
   ].filter((tab) => tab.show);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollHighlightIntoView = () => {
+    containerRef.current
+      ?.getElementsByClassName(highlightMarkClassName)[0]
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+  };
+
+  useImperativeHandle(ref, () => ({
+    scrollHighlightIntoView,
+  }));
+
   return (
-    <div className="bg-white font-sans w-full lg:max-xl:w-[400px] lg:max-xl:shrink-0 xl:flex-1 flex flex-col rounded-lg overflow-hidden border border-border p-4 min-h-[550px]">
+    <div
+      ref={containerRef}
+      className="bg-white font-sans w-full lg:max-xl:w-[400px] lg:max-xl:shrink-0 xl:flex-1 flex flex-col rounded-lg overflow-hidden border border-border p-4 min-h-[550px]"
+    >
       <div className="flex border-b mb-5">
         {tabs.map((tab) => (
           <button
@@ -244,4 +269,4 @@ export const VideoTranscription = ({
       </div>
     </div>
   );
-};
+});

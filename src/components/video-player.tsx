@@ -51,12 +51,20 @@ export const VideoPlayer = ({
     [citation.highlights]
   );
   const playerRef = useRef<YouTubePlayer | null>(null);
+  const transcriptionRef = useRef<{ scrollHighlightIntoView: () => void }>(
+    null
+  );
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [currentPlayTime, setCurrentPlayTime] = useState<number>(0);
 
   const onReady = (event: { target: YouTubePlayer }) => {
     playerRef.current = event.target;
+
+    setCurrentPlayTime(citation.highlights[0]?.startTime || 0);
+    setTimeout(() => {
+      transcriptionRef.current?.scrollHighlightIntoView();
+    }, 100);
 
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -72,6 +80,11 @@ export const VideoPlayer = ({
     if (playerRef.current) {
       await playerRef.current.seekTo(seekTime, true);
       await playerRef.current.playVideo();
+
+      setCurrentPlayTime(seekTime);
+      setTimeout(() => {
+        transcriptionRef.current?.scrollHighlightIntoView();
+      }, 100);
     }
   };
 
@@ -116,6 +129,7 @@ export const VideoPlayer = ({
               />
             </div>
             <VideoTranscription
+              ref={transcriptionRef}
               item={citation}
               currentPlayTime={currentPlayTime}
               onClickTime={handleSeekTo}

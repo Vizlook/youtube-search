@@ -70,13 +70,14 @@ export const YouTubeSearch = () => {
             TubeSeek
           </h1>
           <p className="text-sm md:text-base mb-6 text-center">
-            Search what's said and shown in YouTube videos. Powered by{" "}
+            YouTube Search Engine - Search what's said and shown in videos.
+            Powered by{" "}
             <Link
               href="https://www.vizlook.com/"
               target="_blank"
-              className="underline hover:opacity-65"
+              className="underline hover:opacity-70"
             >
-              Vizlook - The Video Search Engine
+              Vizlook
             </Link>
             .
           </p>

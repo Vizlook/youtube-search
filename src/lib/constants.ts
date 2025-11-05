@@ -1,5 +1,5 @@
 export const QUERY_TIPS = [
-  'What is ChatGPT? Screen text contains "OpenAI"',
+  'What is RAG? Screen text contains "LangChain"',
   "Trump says \"there's no deal until there's a deal.\"",
-  "Instructions on how to wear a mask",
+  "how to use js async function",
 ];

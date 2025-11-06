@@ -70,8 +70,10 @@ export const YouTubeSearch = () => {
             TubeSeek
           </h1>
           <p className="text-sm md:text-base mb-6 text-center">
-            YouTube Search Engine - Search what's said and shown in videos.
-            Powered by{" "}
+            YouTube Search Engine - Search what's said and shown in videos.{" "}
+            <span className="font-semibold">20,000+</span> High-quality YouTube
+            videos covering technology, healthcare, education, finance, and
+            e-commerce, and growing rapidly. Powered by{" "}
             <Link
               href="https://www.vizlook.com/"
               target="_blank"

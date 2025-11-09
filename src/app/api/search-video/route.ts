@@ -1,5 +1,5 @@
 import Vizlook from "@vizlook/sdk";
-import { answer, extractVoiceAndScreenTextFromQuery } from "@/lib/agent";
+import { answer, extractKeyInformationFromQuery } from "@/lib/agent";
 import { type SearchVideoResponse } from "@/lib/types";
 import { type NextRequest } from "next/server";
 import { z } from "zod";
@@ -26,12 +26,11 @@ export async function POST(request: NextRequest) {
   try {
     const body = parsedBody.data;
 
-    const { voiceText, screenText } = await extractVoiceAndScreenTextFromQuery(
-      body.query
-    );
+    const { voiceText, screenText, optimizedQuery } =
+      await extractKeyInformationFromQuery(body.query);
 
     const resultItems = (
-      await vizlookClient.search(body.query, {
+      await vizlookClient.search(optimizedQuery || body.query, {
         containSpokenText: voiceText || undefined,
         containScreenText: screenText || undefined,
         maxResults: 6,

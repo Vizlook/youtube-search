@@ -25,68 +25,32 @@ const unwrapJsonCodeBlock = (str: string): string => {
 const extractInfoSchema = z.object({
   voice_text: z.string(),
   screen_text: z.string(),
+  optimized_query: z.string(),
 });
 
 const geminiAIClient = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
-export const extractVoiceAndScreenTextFromQuery = async (query: string) => {
-  const prompt = `You are an AI model specializing in semantic extraction from user queries. Your task is to analyze a user's query about a video and extract text that is explicitly described as being spoken or visible on-screen within the video.
+export const extractKeyInformationFromQuery = async (query: string) => {
+  const prompt = `You are an AI model specializing in advanced query analysis and transformation. Your task is to deconstruct a user's video query into its components: explicitly mentioned spoken/screen text, and a search-optimized version of the query's core intent.
 
-You MUST respond with a single, raw JSON object. Do not include any explanatory text.
+You **MUST** respond with a single, raw JSON object and nothing else. The JSON object must contain three keys: \`voice_text\`, \`screen_text\`, and \`optimized_query\`.
 
-*   The JSON object must contain two keys: \`voice_text\` and \`screen_text\`.
-*   \`voice_text\`: Contains text the query explicitly states is spoken in the video (e.g., "speaker says...", "character shouts..."). The user's own question or the general topic of the query is not spoken dialogue. If no dialogue is explicitly mentioned, its value must be \`""\`.
-*   \`screen_text\`: Contains text the query explicitly states is visible on screen (e.g., "title is...", "sign says..."). If no on-screen text is explicitly mentioned, its value must be \`""\`.
+**Key Definitions:**
 
----
+1.  \`voice_text\`:
+    *   Contains only the text that the query **explicitly states is spoken** in the video (e.g., "speaker says...", "character shouts...").
+    *   The user's own question or the general topic is **not** dialogue.
+    *   If no dialogue is explicitly mentioned, its value must be \`""\`.
 
-**Example 1:**
-**Query:** "In the video, the speaker says 'welcome to our channel' and the title on the screen is 'My First Vlog'."
-**Output:**
-{
-  "voice_text": "welcome to our channel",
-  "screen_text": "My First Vlog"
-}
+2.  \`screen_text\`:
+    *   Contains only the text that the query **explicitly states is visible** on screen (e.g., "title is...", "sign says...").
+    *   If no on-screen text is explicitly mentioned, its value must be \`""\`.
 
----
-
-**Example 2:**
-**Query:** "Show me the part where the sign says 'Danger: High Voltage'."
-**Output:**
-{
-  "voice_text": "",
-  "screen_text": "Danger: High Voltage"
-}
-
----
-
-**Example 3:**
-**Query:** "Find the scene where the character shouts 'I'll be back'."
-**Output:**
-{
-  "voice_text": "I'll be back",
-  "screen_text": ""
-}
-
----
-
-**Example 4:**
-**Query:** "I'm looking for a video about cute cats."
-**Output:**
-{
-  "voice_text": "",
-  "screen_text": ""
-}
-
----
-
-**Example 5:**
-**Query:** "What is machine learning? The screen text must include 'Deep Learning'."
-**Output:**
-{
-  "voice_text": "",
-  "screen_text": "Deep Learning"
-}
+3.  \`optimized_query\`:
+    *   A rewritten, keyword-rich version of the user's **core search intent**.
+    *   It must be free of conversational fillers (e.g., "I'm looking for...", "show me...").
+    *   It should transform questions into searchable topics (e.g., "What is X?" becomes "explanation of X").
+    *   It should logically incorporate the \`voice_text\` and \`screen_text\` as search filters.
 
 ---
 
@@ -123,6 +87,7 @@ You MUST respond with a single, raw JSON object. Do not include any explanatory 
   return {
     voiceText: response.voice_text,
     screenText: response.screen_text,
+    optimizedQuery: response.optimized_query,
   };
 };
 

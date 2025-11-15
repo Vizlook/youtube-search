@@ -47,10 +47,13 @@ You **MUST** respond with a single, raw JSON object and nothing else. The JSON o
     *   If no on-screen text is explicitly mentioned, its value must be \`""\`.
 
 3.  \`optimized_query\`:
-    *   A rewritten, keyword-rich version of the user's **core search intent**.
-    *   It must be free of conversational fillers (e.g., "I'm looking for...", "show me...").
-    *   It should transform questions into searchable topics (e.g., "What is X?" becomes "explanation of X").
-    *   It should logically incorporate the \`voice_text\` and \`screen_text\` as search filters.
+    *   This field represents the most effective search version of the query.
+    *   **Crucially, if the original query is already specific, keyword-driven, and well-structured for search, this value MUST be the same as the original query.**
+    *   A query is considered "insufficient" and **MUST be rewritten** if it:
+        *   Contains conversational fillers (e.g., "I'm looking for...", "Can you find...").
+        *   Is a natural language question (e.g., "What is X?").
+        *   Uses vague descriptors (e.g., "the cool video," "that thing I saw").
+    *   The rewritten query should be keyword-rich and logically incorporate any \`voice_text\` or \`screen_text\` as search filters.
 
 ---
 

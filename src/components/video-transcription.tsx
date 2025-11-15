@@ -218,6 +218,14 @@ export const VideoTranscription = forwardRef<
     scrollHighlightIntoView,
   }));
 
+  const handleClickTab = (tabId: TabId) => {
+    setActiveTab(tabId);
+
+    requestAnimationFrame(() => {
+      scrollHighlightIntoView();
+    });
+  };
+
   return (
     <div
       ref={containerRef}
@@ -227,7 +235,7 @@ export const VideoTranscription = forwardRef<
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => handleClickTab(tab.id)}
             className={cn(
               "flex items-center text-sm md:text-base p-2 md:px-3 transition-colors duration-200 ease-in-out cursor-pointer",
               {
